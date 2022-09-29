@@ -18,6 +18,7 @@ esphome:
     - bodmer/tft_espi
     - lvgl/lvgl
     - lvgl/lv_examples
+    - esphome-lvgl=https://github.com/TLCary/esphome-lvgl.git
 
   platformio_options:
     upload_speed: 1500000
