@@ -20,6 +20,7 @@ esphome:
 esp32:
   board: esp32-s3-devkitc-1
   variant: esp32s3
+  # TTGO T-Display S3, 170(h)*320(w)
   framework:
     type: arduino
     version: 2.0.3
