@@ -72,7 +72,11 @@ wifi:
 
 web_server:
   port: 80
-
+  
+time:
+  - platform: homeassistant
+    id: ha_time
+    
 custom_component:
   #- lambda: |-
   #    auto tftespi_component = new TFTeSPIComponent();
