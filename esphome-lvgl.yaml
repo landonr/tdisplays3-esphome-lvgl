@@ -1,24 +1,47 @@
 esphome:
   name: esphome-lvgl
-  platform: ESP32
-  board: lolin_d32_pro
-
-  # Include customized header files for TFT_eSPI, LVGL components and the demo UI
+    # Include customized header files for TFT_eSPI, LVGL components and the demo UI
   includes:
     # - tftespi-component.h
-    - bootlogo.h
-    - lv_conf.h
-    - lv_demo_conf.h
-    - LvglComponent.h
-    - LvglCheckbox.h
-    - LvglSwitch.h
-    - LvglToggleButton.h
+    - esphome-lvgl/bootlogo.h
+    - esphome-lvgl/lv_conf.h
+    - esphome-lvgl/lv_demo_conf.h
+    - esphome-lvgl/LvglComponent.h
+    - esphome-lvgl/LvglCheckbox.h
+    - esphome-lvgl/LvglSwitch.h
+    - esphome-lvgl/LvglToggleButton.h
   # Dowload extra libraries for TFT_eSPI, LVGL and the demo UI
   libraries:
     - bodmer/tft_espi
     - lvgl/lvgl
     - lvgl/lv_examples
     - esphome-lvgl=https://github.com/TLCary/esphome-lvgl.git
+
+esp32:
+  board: esp32-s3-devkitc-1
+  variant: esp32s3
+  framework:
+    type: arduino
+    version: 2.0.3
+    platform_version: 5.0.0
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+
+ota:
+  password: "6ada29f6f41ce1685d29d406efd25fa4"
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "S3 Fallback Hotspot"
+    password: "zQ9tuPKIfFMu"
 
   platformio_options:
     upload_speed: 1500000
@@ -46,39 +69,6 @@ esphome:
       - "-D SPI_TOUCH_FREQUENCY=2500000"
       - "-D SPI_READ_FREQUENCY=20000000"
     # board_build.f_flash: 80000000L
-
-# mqtt:
-#   broker: 
-#   username: 
-#   password: 
-#   discovery: True
-#   discovery_retain: true
-
-wifi:
-  ssid: !secret wifi_ssid
-  password: !secret wifi_password
-  ## use fast_connect of you are connecting to a hidden WiFi network, else comment it out
-  fast_connect: true
-
-  # Enable fallback hotspot (captive portal) in case wifi connection fails
-  ap:
-    ssid: "Hasp-Esphome Fallback Hotspot"
-    password: "9lwafyKa5sIp"
-
-captive_portal:
-
-# Enable logging
-logger:
-
-# For capacitive screens
-i2c:
-
-# Enable Home Assistant API
-api:
-  password: !secret esplibapi_password
-
-# ota:
-#   password: ""
 
 web_server:
   port: 80
