@@ -43,33 +43,6 @@ wifi:
     ssid: "S3 Fallback Hotspot"
     password: "zQ9tuPKIfFMu"
 
-  platformio_options:
-    upload_speed: 1500000
-    build_flags:
-      - "-D LV_CONF_INCLUDE_SIMPLE"
-      - "-D LV_LVGL_H_INCLUDE_SIMPLE"
-      - "-D LV_DEMO_CONF_INCLUDE_SIMPLE"
-      - "-I src      ; for lv_conf.h"
-      # - "-I .piolibdeps/hasp-esphome      ; for hasplib"
-      - "-D LV_MEM_SIZE=49152U           ; 48 kB lvgl memory"
-      # The folowing defines will configure the TFT display driver, size and pins
-      - "-D USER_SETUP_LOADED=1"
-      - "-D ILI9341_DRIVER=1"
-      # - "-D SUPPORT_TRANSACTIONS ; Default on ESP32"
-      - "-D TFT_WIDTH=240"
-      - "-D TFT_HEIGHT=320"
-      - "-D TFT_ROTATION=0 ; Use default, see TFT_ROTATION values"
-      - "-D TFT_MISO=19"
-      - "-D TFT_MOSI=23"
-      - "-D TFT_SCLK=18"
-      - "-D TFT_BCKL=32  ; Configurable via web UI (default 32)"
-      - "-D TOUCH_CS=12  ; Default for TFT connector"
-      - "-D TOUCH_CAL_DATA=268,3553,383,3532,6  ; Touch Calibration Data"
-      - "-D SPI_FREQUENCY=40000000"
-      - "-D SPI_TOUCH_FREQUENCY=2500000"
-      - "-D SPI_READ_FREQUENCY=20000000"
-    # board_build.f_flash: 80000000L
-
 web_server:
   port: 80
   
