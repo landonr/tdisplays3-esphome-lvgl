@@ -2,12 +2,10 @@ esphome:
   name: esphome-tdisplay-s3-lvgl
     # Include customized header files for TFT_eSPI, LVGL components and the demo UI
   includes:
-    # - tftespi-component.h
     - tdisplays3/tft_espi_display.h
     - tdisplays3/Free_Fonts.h
     - esphome-lvgl/bootlogo.h
     - esphome-lvgl/lv_conf.h
-    - esphome-lvgl/lv_demo_conf.h
     - esphome-lvgl/LvglComponent.h
     - esphome-lvgl/LvglCheckbox.h
     - esphome-lvgl/LvglSwitch.h
@@ -18,9 +16,10 @@ esphome:
     - FS
     - SPIFFS
     - tdisplays3=https://github.com/landonr/lilygo-tdisplays3-esphome.git
+    #- esphome-lvgl=file:///config/esphome/esphome-lvgl/
+    - esphome-lvgl=https://github.com/landonr/tdisplays3-esphome-lvgl.git
     - lvgl/lvgl
     - lvgl/lv_examples
-    - esphome-lvgl=https://github.com/TLCary/esphome-lvgl.git
 
 esp32:
   board: esp32-s3-devkitc-1

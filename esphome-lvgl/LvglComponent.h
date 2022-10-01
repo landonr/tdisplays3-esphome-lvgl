@@ -2,9 +2,10 @@
 
 #include "esphome.h"
 #include "lvgl.h"
-#include "lv_demo.h"
 #include "TFT_eSPI.h"
 #include "bootlogo.h"
+
+#define TFT_ROTATION 0
 
 const size_t buf_pix_count = LV_HOR_RES_MAX * LV_VER_RES_MAX / 5;
 
@@ -13,7 +14,6 @@ static lv_color_t buf[buf_pix_count];
 lv_style_t switch_style;
 
 /* LVGL callbacks - Needs to be accessible from C library */
-void IRAM_ATTR my_touchpad_read(lv_indev_drv_t *indev_driver, lv_indev_data_t *data);
 void IRAM_ATTR gui_flush_cb(lv_disp_drv_t *disp, const lv_area_t *area, lv_color_t *color_p);
 
 TFT_eSPI tft;
@@ -43,19 +43,9 @@ public:
     disp_drv.draw_buf = &disp_buf;
     lv_disp_drv_register(&disp_drv);
 
-    /*Initialize the input device driver*/
-    static lv_indev_drv_t indev_drv;
-    lv_indev_drv_init(&indev_drv);
-    indev_drv.type = LV_INDEV_TYPE_POINTER;
-    indev_drv.read_cb = my_touchpad_read;
-    lv_indev_drv_register(&indev_drv);
-
     // Make unchecked checkboxes darker grey
     lv_style_init(&switch_style);
     lv_style_set_bg_color(&switch_style, lv_palette_main(LV_PALETTE_GREY));
-
-    // lv_demo_widgets();
-    // lv_demo_music();
 
     this->high_freq_.start(); // avoid 16 ms delay
   }
@@ -82,8 +72,6 @@ private:
     tft.setSwapBytes(true); /* set endianess */
     tft.setRotation(TFT_ROTATION);
     tft_splashscreen();
-    uint16_t calData[5] = {TOUCH_CAL_DATA};
-    tft.setTouch(calData);
 
     delay(250);
   }
@@ -119,31 +107,4 @@ void IRAM_ATTR gui_flush_cb(lv_disp_drv_t *disp, const lv_area_t *area, lv_color
 
   /* Tell lvgl that flushing is done */
   lv_disp_flush_ready(disp);
-}
-
-/*Read the touchpad - Needs to be accessible from C library */
-void IRAM_ATTR my_touchpad_read(lv_indev_drv_t *indev_driver, lv_indev_data_t *data)
-{
-  uint16_t touchX, touchY;
-
-  bool touched = tft.getTouch(&touchX, &touchY, 600);
-
-  if (!touched)
-  {
-    data->state = LV_INDEV_STATE_REL;
-  }
-  else
-  {
-    data->state = LV_INDEV_STATE_PR;
-
-    /*Set the coordinates*/
-    data->point.x = touchX;
-    data->point.y = touchY;
-
-    // Serial.print("Data x");
-    // Serial.print(touchX);
-
-    // Serial.print(" - y");
-    // Serial.println(touchY);
-  }
 }
